@@ -59,7 +59,8 @@ REACT_APP_API_URL=https://your-backend-url.com/api
 
 ### Mobile View
 
-![Mobile](screenshots/mobile.png)
+![Mobile](screenshots/mobile_1.png)
+![Mobile](screenshots/mobile_2.png)
 
 ## Author
 
