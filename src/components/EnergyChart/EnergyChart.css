@@ -151,10 +151,10 @@
 
 @keyframes revealChart {
   from {
-    stroke-dashoffset: 0;
+    stroke-dashoffset: 1005.3;
   }
   to {
-    stroke-dashoffset: -502.65;
+    stroke-dashoffset: 502.65;
   }
 }
 
