@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { EnergyCard } from './components/EnergyChart';
 import { OptimalWindowCard } from './components/OptimalWindow/OptimalWindow';
@@ -11,9 +11,25 @@ import { useOptimalWindow } from './hooks/useOptimalWindow';
  * displays the best EV charging window for next 2 days based on clean energy share.
  */
 function App() {
-  const [chargingDuration, setChargingDuration] = useState<number>(3);
+  const [ chargingDuration, setChargingDuration ] = useState<number>(3);
+  const [ activeIndex, setActiveIndex ] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { energyData, loading: energyLoading, error: energyError, refetch } = useEnergyData();
   const { optimalWindow, loading: windowLoading, error: windowError, fetchWindow } = useOptimalWindow();
+
+  /** Track carousel position and update active dot indicator. */
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      setActiveIndex(index);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleFindOptimalWindow = () => {
     fetchWindow(chargingDuration);
@@ -44,7 +60,7 @@ function App() {
             </button>
           )}
 
-          <div className="charts-container">
+          <div ref={containerRef} className="charts-container">
             {/* Skeleton cards while loading or on error */}
             {(energyLoading || energyError) ? (
               <>
@@ -63,6 +79,12 @@ function App() {
                 />
               ))
             ) : null}
+          </div>
+
+          <div className="carousel-dots">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className={`dot ${i === activeIndex ? 'active' : ''}`} />
+            ))}
           </div>
         </section>
 

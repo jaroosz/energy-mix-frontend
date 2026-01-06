@@ -104,7 +104,35 @@ section {
   color: #ffffff;
 }
 
-/*  ------------------ Loading Banner ------------------   */
+/*  ------------------ Carousel Dots ------------------   */
+
+.carousel-dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+@media (max-width: 800px) {
+  .carousel-dots {
+    display: flex;
+  }
+  
+  .dot {
+    width: 6px;
+    height: 6px;
+    background: #ccc;
+    border-radius: 50%;
+    transition: width 0.3s;
+  }
+  
+  .dot.active {
+    width: 20px;
+    border-radius: 3px;
+  }
+}
+
+/*  ------------------ Footer ------------------   */
 
 .footer {
   color: #666;
